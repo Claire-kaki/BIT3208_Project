@@ -1,17 +1,15 @@
-# BIT3208-Week6-CRUD: Full Web Database Integration System
+# Week 6: Product Inventory CRUD Module (E-Commerce Platform)
 
-This repository contains the complete practical task implementations for Week 6, focusing on PHP-MySQL relational structural integration, session token handles, dynamic keyword search lookups, and clean CSS styling frameworks.
+## Project Overview
+This module contains the core **Create, Read, Update, and Delete (CRUD)** inventory architecture developed for our semester E-Commerce application project. It demonstrates secure server-side communications tracking structured products, pricing configurations, and stock availability parameters within a relational database system framework.
 
-## 🚀 Architectural Modules Profile
-* **/week6/** - Primary Student Form & Dynamic Logs Grid Directory (Practical Task 1)
-* **/week6/library_system/** - Distributed Library Catalog Ledger Sub-Module (Practical Task 2)
-* **/week6/employee_system/** - Secure Enterprise Employee Directory featuring Form Validation Engine and live row keyword text tracking search options (Practical Task 3 Challenge)
-
-## 🛠️ Step-by-Step System Setup
-1. Clone this repository directly into your local development server path: `C:/xampp/htdocs/BIT3208_Project/`
-2. Open your web browser and go to your phpMyAdmin panel: `http://localhost/phpmyadmin/`
-3. Import the included database script file **`schema.sql`** to build the database engine tables instantly.
-4. Open your browser to test and verify the operational interfaces:
-   * **Student Portal:** `http://localhost/BIT3208_Project/week6/index.php`
-   * **Library Catalog:** `http://localhost/BIT3208_Project/week6/library_system/index.php`
-   * **Employee Portal:** `http://localhost/BIT3208_Project/week6/employee_system/login.php`
+## Project Directory Architecture
+```text
+week6_ecommerce/
+│
+├── connection.php   # Central MySQL database link wrapper
+├── products.php     # Main dashboard handling item insertion and display tables (CREATE & READ)
+├── edit.php         # Specialized entry script updating specific items (UPDATE)
+├── delete.php       # Background processing script executing item dropped lines (DELETE)
+├── schema.sql       # Structural database architecture layout file
+└── README.md        # Technical execution and platform review file

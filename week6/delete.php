@@ -1,21 +1,16 @@
 <?php
-include 'db_connect.php';
+include("connection.php");
 
-// Inspect incoming data requests for matching parameters
+// --- 4. DELETE OPERATION (Removing Records) ---
 if (isset($_GET['id'])) {
     $id = intval($_GET['id']);
-
-    // Perform row target purge matching index tracking number 
-    $delete_query = "DELETE FROM students WHERE id = $id";
     
-    if (mysqli_query($conn, $delete_query)) {
-        header("Location: /BIT3208_Project/week6/index.php");
-        exit();
-    } else {
-        echo "Critical Error during record deletion lifecycle: " . mysqli_error($conn);
-    }
-} else {
-    header("Location: /BIT3208_Project/week6/index.php");
-    exit();
+    $stmt = $conn->prepare("DELETE FROM products WHERE product_id = ?");
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $stmt->close();
 }
+
+header("Location: products.php");
+exit();
 ?>

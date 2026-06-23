@@ -1,67 +1,65 @@
 <?php
-include 'db_connect.php';
+include("connection.php");
 
-// Fetch the targeted record metrics to fill the form inputs
+// Fetch active row fields into inputs
 if (isset($_GET['id'])) {
     $id = intval($_GET['id']);
-    $record_set = mysqli_query($conn, "SELECT * FROM students WHERE id = $id");
-    $row = mysqli_fetch_assoc($record_set);
-    
-    if (!$row) {
-        die("Record entry missing from schema rows.");
-    }
+    $result = mysqli_query($conn, "SELECT * FROM products WHERE product_id = $id");
+    $product = mysqli_fetch_assoc($result);
 }
 
-// Handle the relational SQL UPDATE execution query when submitted
-if (isset($_POST['commit_update'])) {
-    $id = intval($_POST['id']);
-    $fullname = mysqli_real_escape_string($conn, trim($_POST['fullname']));
-    $email = mysqli_real_escape_string($conn, trim($_POST['email']));
-    $course = mysqli_real_escape_string($conn, trim($_POST['course']));
+// --- 3. UPDATE OPERATION (Modifying Existing Data) ---
+if (isset($_POST['update_product'])) {
+    $id    = intval($_POST['product_id']);
+    $name  = trim($_POST['product_name']);
+    $desc  = trim($_POST['description']);
+    $price = $_POST['price'];
+    $stock = $_POST['stock_quantity'];
 
-    $update_sql = "UPDATE students SET fullname='$fullname', email='$email', course='$course' WHERE id=$id";
+    // FIXED: Correct binding specifier format string (ssdii)
+    $stmt = $conn->prepare("UPDATE products SET product_name=?, description=?, price=?, stock_quantity=? WHERE product_id=?");
+    $stmt->bind_param("ssdii", $name, $desc, $price, $stock, $id);
     
-    if (mysqli_query($conn, $update_sql)) {
-        header("Location: /BIT3208_Project/week6/index.php");
+    if ($stmt->execute()) {
+        header("Location: products.php");
         exit();
-    } else {
-        echo "Error modifying file metrics: " . mysqli_error($conn);
     }
+    $stmt->close();
 }
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Class Activity 3: Edit Student Profile Matrix</title>
+    <title>Edit Product Properties</title>
     <style>
-        body { font-family: system-ui, sans-serif; background-color: #f4f6f9; padding: 40px; }
-        .edit-container { max-width: 500px; margin: auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-        label { display: block; font-weight: bold; margin-top: 15px; margin-bottom: 5px; }
-        input { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; }
-        button { background-color: #10b981; color: white; font-weight: bold; padding: 12px 24px; border: none; border-radius: 6px; cursor: pointer; margin-top: 20px; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #f8fafc; padding: 40px; }
+        .edit-box { background: white; padding: 30px; border-radius: 8px; max-width: 500px; margin: 0 auto; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        input, textarea { width: 100%; padding: 10px; margin: 10px 0 20px 0; border: 1px solid #cbd5e1; border-radius: 4px; box-sizing: border-box; }
+        button { background: #10b981; color: white; padding: 12px 20px; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; }
     </style>
 </head>
 <body>
+    <div class="edit-box">
+        <h2>✏️ Modify Product Information</h2>
+        <form method="POST" action="edit.php">
+            <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>">
+            
+            <label>Product Name</label>
+            <input type="text" name="product_name" value="<?php echo htmlspecialchars($product['product_name']); ?>" required>
 
-<div class="edit-container">
-    <h3>Class Activity 3: Update Student Parameters</h3>
-    <form method="POST" action="edit.php">
-        <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
+            <label>Description</label>
+            <textarea name="description"><?php echo htmlspecialchars($product['description']); ?></textarea>
 
-        <label>Full Student Name</label>
-        <input type="text" name="fullname" value="<?php echo htmlspecialchars($row['fullname']); ?>" required>
+            <label>Price (KES)</label>
+            <input type="number" step="0.01" name="price" value="<?php echo $product['price']; ?>" required>
 
-        <label>Academic Email Address</label>
-        <input type="email" name="email" value="<?php echo htmlspecialchars($row['email']); ?>" required>
+            <label>Stock Quantity</label>
+            <input type="number" name="stock_quantity" value="<?php echo $product['stock_quantity']; ?>" required>
 
-        <label>Assigned Academic Course Program Pathway</label>
-        <input type="text" name="course" value="<?php echo htmlspecialchars($row['course']); ?>" required>
-
-        <button type="submit" name="commit_update">Update Student Profile</button>
-        <a href="/BIT3208_Project/week6/index.php" style="margin-left: 15px; color: #64748b; text-decoration: none;">Cancel Changes</a>
-    </form>
-</div>
-
+            <button type="submit" name="update_product">Update Adjustments</button>
+            <a href="products.php" style="margin-left: 15px; color: #64748b; text-decoration: none;">Cancel</a>
+        </form>
+    </div>
 </body>
 </html>
