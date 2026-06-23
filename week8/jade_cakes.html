@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jade Cake Training and Supplies Business</title>
+    <style>
+        /* --- 1. DESIGN SYSTEM & MOBILE-FIRST DEFAULTS --- */
+        :root {
+            --primary: #006644;      /* Deep Jade Green */
+            --secondary: #d4af37;    /* Elegant Gold Accent */
+            --dark: #1e293b;         /* Slate Text */
+            --light: #f8fafc;        /* Off-White Background */
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        /* --- 2. RESPONSIVE NAVIGATION INTERFACE (Flexbox) --- */
+        .navbar {
+            background-color: var(--primary);
+            padding: 15px 5%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-logo {
+            color: var(--white);
+            font-size: 22px;
+            font-weight: bold;
+            text-decoration: none;
+            margin-bottom: 10px;
+        }
+
+        .nav-logo span {
+            color: var(--secondary);
+        }
+
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .nav-links a:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+            color: var(--secondary);
+        }
+
+        /* --- 3. PAGE FRAMEWORK LAYOUTS --- */
+        section {
+            padding: 60px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            color: var(--primary);
+            font-size: 28px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: var(--secondary);
+            margin: 10px auto 0 auto;
+        }
+
+        /* HOME PAGE HERO COMPONENT (Flexbox) */
+        #home {
+            background: linear-gradient(rgba(0, 102, 68, 0.85), rgba(15, 23, 42, 0.9)), url('https://images.unsplash.com/photo-1578985545062-69928b1d9587?q=80&w=1000') no-repeat center center/cover;
+            color: var(--white);
+            text-align: center;
+            padding: 100px 5%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 50vh;
+        }
+
+        #home h1 { font-size: 36px; margin: 0 0 15px 0; }
+        #home p { font-size: 18px; margin: 0 0 25px 0; color: #cbd5e1; }
+        .cta-btn { background-color: var(--secondary); color: var(--dark); padding: 12px 25px; text-decoration: none; font-weight: bold; border-radius: 5px; transition: transform 0.2s; }
+        .cta-btn:hover { transform: scale(1.05); }
+
+        /* ABOUT US COMPONENT */
+        .about-content {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+
+        /* PRODUCTS & TRAINING PAGES (CSS Grid - Mobile-First 1 Column) */
+        .grid-matrix {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Responsive Fluid Image Processing Handling */
+        .card-img-placeholder {
+            width: 100%;
+            aspect-ratio: 16 / 10;
+            background-color: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 45px;
+        }
+
+        .card-body {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .card-body h3 { margin: 0 0 10px 0; color: var(--primary); }
+        .card-body p { font-size: 14px; color: #64748b; margin: 0 0 15px 0; flex-grow: 1; }
+        .card-meta { font-weight: bold; color: var(--dark); font-size: 16px; margin-top: auto; border-top: 1px dashed #e2e8f0; padding-top: 10px; }
+
+        /* CONTACT PAGE FORM COMPONENT (Flexbox) */
+        .contact-wrapper {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .contact-form input, .contact-form textarea {
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            font-size: 15px;
+            font-family: sans-serif;
+        }
+
+        .submit-btn {
+            background-color: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 12px;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .info-box {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 15px;
+        }
+
+        footer {
+            background-color: #0f172a;
+            color: #94a3b8;
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+            margin-top: 40px;
+        }
+
+        /* --- 4. REQUIRED BREAKPOINTS (Three Screen Size Validation Layers) --- */
+
+        /* SCREEN SIZE 2: TABLET VIEW BREAKPOINT (650px and Up) */
+        @media (min-width: 650px) {
+            .navbar {
+                flex-direction: row;
+                justify-content: space-between;
+                padding: 15px 5%;
+            }
+            .nav-logo { margin-bottom: 0; }
+            .nav-links { gap: 20px; }
+            .nav-links a { font-size: 15px; }
+            
+            /* Grid layout shifts to 2 columns per row */
+            .grid-matrix {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            #home { padding: 140px 5%; }
+            #home h1 { font-size: 46px; }
+        }
+
+        /* SCREEN SIZE 3: DESKTOP VIEW BREAKPOINT (950px and Up) */
+        @media (min-width: 950px) {
+            .section-title { font-size: 34px; }
+            
+            /* Grid layout scaling maps out all elements in 3 or 4 columns */
+            #products .grid-matrix {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            #training .grid-matrix {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .contact-split {
+                display: flex;
+                gap: 40px;
+                align-items: flex-start;
+            }
+            .contact-wrapper { flex: 2; }
+            .info-box { flex: 1; margin-top: 0; text-align: left; padding: 20px; background: #e2e8f0; border-radius: 8px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="#home" class="nav-logo">🎂 Jade <span>Cakes</span></a>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#products">Products</a></li>
+            <li><a href="#training">Training Services</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <div id="home">
+        <h1>Master the Art of Cake Design</h1>
+        <p>Premium Professional Pastry Training & Elite Baking Supplies</p>
+        <a href="#training" class="cta-btn">Explore Classes</a>
+    </div>
+
+    <section id="about">
+        <h2 class="section-title">About Us</h2>
+        <div class="about-content">
+            <p><strong>Jade Cake Training and Supplies Business</strong> is an industry-leading culinary academy and distribution house built to empower intermediate and professional bakers. We provide high-tier technical qualifications alongside specialized global ingredients and infrastructure gear necessary to scale any standard commercial baking workflow model successfully.</p>
+        </div>
+    </section>
+
+    <section id="products">
+        <h2 class="section-title">Supplies Catalogue</h2>
+        <div class="grid-matrix">
+            <div class="card">
+                <div class="card-img-placeholder">🥣</div>
+                <div class="card-body">
+                    <h3>Premium Stand Mixer</h3>
+                    <p>Heavy-duty orbital system engineered for dense fondant textures and large capacity batched operations.</p>
+                    <div class="card-meta">KES 24,500.00</div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-img-placeholder">🎨</div>
+                <div class="card-body">
+                    <h3>Gel Color Pack</h3>
+                    <p>Highly concentrated professional oil-based food pigments ensuring zero structural layout distortion in cream frosting layers.</p>
+                    <div class="card-meta">KES 1,800.00</div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-img-placeholder">🍰</div>
+                <div class="card-body">
+                    <h3>Silicone Mould Sets</h3>
+                    <p>High-thermal resilience non-stick geometric molds designed for intricate pastry details.</p>
+                    <div class="card-meta">KES 3,200.00</div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-img-placeholder">⚖️</div>
+                <div class="card-body">
+                    <h3>Digital Micro-Scale</h3>
+                    <p>Precision calibration instrumentation ensuring strict microgram accuracy metrics for molecular baking requirements.</p>
+                    <div class="card-meta">KES 1,500.00</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="training">
+        <h2 class="section-title">Training Services</h2>
+        <div class="grid-matrix">
+            <div class="card">
+                <div class="card-img-placeholder">👩‍🍳</div>
+                <div class="card-body">
+                    <h3>Fondant Engineering Diploma</h3>
+                    <p>An intense, specialized masterclass tracking multi-tier structural support systems, complex internal framing, and realistic floral texturing guidelines.</p>
+                    <div class="card-meta">Duration: 6 Weeks | Certified</div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-img-placeholder">🧁</div>
+                <div class="card-body">
+                    <h3>Commercial Pastry Business Bootcamp</h3>
+                    <p>Bridging the operational gaps between recipe scaling, manufacturing overhead computations, product costing formulas, and catering supply layouts.</p>
+                    <div class="card-meta">Duration: 4 Weeks | Business Track</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2 class="section-title">Contact Us</h2>
+        <div class="contact-split">
+            <div class="contact-wrapper">
+                <form class="contact-form" onsubmit="event.preventDefault(); alert('Message dispatched safely to Jade Cakes Admin Core.');">
+                    <input type="text" placeholder="Your Full Name" required>
+                    <input type="email" placeholder="Your Active Email Address" required>
+                    <textarea rows="5" placeholder="Inquire about course slots or supply wholesale distribution accounts..." required></textarea>
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            </div>
+            <div class="info-box">
+                <h3>📍 Head Quarters</h3>
+                <p>Jade Corporate Complex, Suite 4B<br>Thika, Kenya</p>
+                <h3>📞 Hotlines</h3>
+                <p>+254 700 123 456<br>info@jadecakes.co.ke</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Jade Cake Training and Supplies Business. All Rights Reserved. Systems Assignment Integration.</p>
+    </footer>
+
+</body>
+</html>

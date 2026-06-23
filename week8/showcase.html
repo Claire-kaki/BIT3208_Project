@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ElecHub Showcase</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f8;
+            margin: 0;
+            padding: 20px;
+        }
+        header {
+            background-color: #0f172a;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        /* Default Mobile Grid Matrix: 1 card per row */
+        .product-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        /* Media Query Breakdown 1: Tablet Display (2 items per row) */
+        @media (min-width: 500px) {
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        /* Media Query Breakdown 2: Desktop Display (Forces all 4 items onto 1 row) */
+        @media (min-width: 750px) {
+            .product-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        
+        .card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .img-box {
+            background: #e2e8f0;
+            padding: 25px;
+            font-size: 35px;
+            border-radius: 6px;
+        }
+        .item-title {
+            font-size: 18px;
+            margin: 10px 0 5px 0;
+            color: #0f172a;
+        }
+        .item-desc {
+            font-size: 13px;
+            color: #64748b;
+            margin: 0 0 15px 0;
+            line-height: 1.4;
+        }
+        .price {
+            font-weight: bold;
+            color: #0284c7;
+            font-size: 16px;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>⚡ ElecHub Store</h1>
+        <p>Responsive Product Showcase</p>
+    </header>
+
+    <div class="product-grid">
+        
+        <div class="card">
+            <div class="img-box">🔌</div>
+            <div class="item-title">Fast Cable</div>
+            <div class="item-desc">Heavy-duty nylon braided fast-charging cable.</div>
+            <div class="price">KES 450</div>
+        </div>
+
+        <div class="card">
+            <div class="img-box">🔋</div>
+            <div class="item-title">Powerbank</div>
+            <div class="item-desc">Compact 10,000mAh external cell backup battery.</div>
+            <div class="price">KES 2,800</div>
+        </div>
+
+        <div class="card">
+            <div class="img-box">🎧</div>
+            <div class="item-title">Wireless Pods</div>
+            <div class="item-desc">True wireless audio with background isolation design.</div>
+            <div class="price">KES 3,500</div>
+        </div>
+
+        <div class="card">
+            <div class="img-box">💻</div>
+            <div class="item-title">Laptop Stand</div>
+            <div class="item-desc">Adjustable ergonomic aluminum frame setup.</div>
+            <div class="price">KES 1,950</div>
+        </div>
+
+    </div>
+
+</body>
+</html>
